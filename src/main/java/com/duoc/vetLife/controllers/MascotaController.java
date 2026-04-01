@@ -35,6 +35,7 @@ public class MascotaController {
     @PostMapping
     public ResponseEntity<Mascota> saveMascota(@Valid @RequestBody Mascota mascota) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mascotaService.savePet(mascota));
+
     }
 
     @PutMapping("{id}")

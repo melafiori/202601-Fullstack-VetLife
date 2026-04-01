@@ -1,5 +1,6 @@
 package com.duoc.vetLife.repositories;
 
+import com.duoc.vetLife.exceptions.MascotaException;
 import com.duoc.vetLife.models.Mascota;
 import org.springframework.stereotype.Repository;
 
@@ -38,8 +39,14 @@ public class MascotaRepository {
 
 
     public Mascota save (Mascota newPet) {
-        listaMascotas.add(newPet);
-        return newPet;
+        Mascota mascotaGetById = this.getById(newPet.getId());
+        if (mascotaGetById == null) {
+            this.listaMascotas.add(newPet);
+            return newPet;
+        }
+        throw new MascotaException("La mascota con el ID " + newPet.getId() + " ya existe.");
+
+
     }
 
     public Mascota update(Mascota updatedPet) {

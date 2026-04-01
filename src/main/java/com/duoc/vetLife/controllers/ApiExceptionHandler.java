@@ -1,5 +1,6 @@
 package com.duoc.vetLife.controllers;
 
+import com.duoc.vetLife.exceptions.MascotaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,5 +20,11 @@ public class ApiExceptionHandler {
                 errors.put(error.getField(), error.getDefaultMessage())
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+    @ExceptionHandler(MascotaException.class)
+    public ResponseEntity<Map<String, String>> handleMascotaException(MascotaException ex){
+        Map<String, String> error = new HashMap<>();
+        error.put("Error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 }
